@@ -10,7 +10,7 @@ unsigned short memory[32];   // 32 words of memory enough to store simple progra
 
 
 main(int argc, char* argv[]) {
-
+//making change to code test
     
 }
 int controller (CPU_p cpu) {
