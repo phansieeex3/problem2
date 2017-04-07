@@ -13,9 +13,14 @@ jmp, and br as a lc3 simulator.
 unsigned short memory[32];   // 32 words of memory enough to store simple program
 
 
+<<<<<<< HEAD
 main(int argc, char* argv[]) 
 {
 
+=======
+main(int argc, char* argv[]) {
+//making change to code test
+>>>>>>> 06acd7924257d9cefdccb394386331f7478ec30f
     
 }
 int controller (CPU_p cpu) 
