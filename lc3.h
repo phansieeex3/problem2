@@ -19,14 +19,14 @@
 
 
 
-#define ADD 0
-#define AND 1
-#define NOT 2
-#define TRAP 3
-#define LD 4
-#define ST 5
-#define JMP 6
-#define BR 7
+#define ADD 1
+#define AND 5
+#define NOT 9
+#define TRAP 15
+#define LD 2
+#define ST 3
+#define JMP 12
+#define BR 0
 
 
 typedef unsigned short Register;
