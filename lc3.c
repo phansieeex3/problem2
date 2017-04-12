@@ -33,18 +33,25 @@ int controller (CPU_p cpu)
 		return 1;
 	}
     // do any initializations here
-	unsigned int opcode, state, Rd, Rs1, Rs2, immed, effective_addr;	// fields for the IR
+	unsigned int opcode, state, Rd, Rs1, Rs2, immed, PCoff9;	// fields for the IR
     state = FETCH;
     for (;;) {   // efficient endless loop
         switch (state) {
             case FETCH: // microstates 18, 33, 35 in the book
                 printf("Here in FETCH\n");
-
-                //moving memory at pc into instruction register
-                cpu->ir = memory[cpu->pc];
-
+		cpu->MAR = cpu->pc;//ms 18
+		
+                //moving memory at pc into instruction register 33
+                cpu->MDR = memory[cpu->pc];
+		
                 // get memory[PC] into IR - memory is a global array
-                // increment PC
+		cpu->ir = memory[cpu->pc];
+                // increment PC- ms 18
+		if (cpu->pc < 31){
+		  cpu->pc ++;
+		} else {
+		 cpu->pc = 0;
+		}
                 printf("Contents of IR = %04X\n", cpu->ir);
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 // put printf statements in each state and microstate to see that it is working
@@ -59,15 +66,18 @@ int controller (CPU_p cpu)
                 //destination register
                 Rd= (cpu->ir >> DR_LSB) & ~(~0 << (DR_MSB-DR_LSB+1));
 		printf("\nDestination register is: %d", Rd);
-                //first source register
+                //first source register /baseR
                 Rs1= (cpu->ir >> SR_LSB) & ~(~0 << (SR_MSB-SR_LSB+1));
 		printf("\nSource register 1 is : %d", Rs1);
                 //second source register
                 Rs2= (cpu->ir >> SR2_LSB) & ~(~0 << (SR2_MSB-SR2_LSB+1));
 		printf("\nSource register 2 is : %d", Rs2);
+		PCoff9 = (cpu->ir >> 0) & ~(~0 << (8-0 +1));
+		printf("\n PCoff9 is : %d", PCoff9);
                 immed =  (cpu->ir >> IMMED_LSB) & ~(~0 << (IMMED_MSB-IMMED_LSB+1));
 		printf("\nimmed is : %d", immed);
                 // make sure opcode is in integer form
+		BEN = ((cpu->ir >> 11) & ~(~0 << (11-11+1)) && N) + ((cpu->ir >> 10) & ~(~0 << (10-10+1)) && Z) +((cpu->ir >> 9) & ~(~0 << (9-9+1)) && P);
 				// hint: use four unsigned int variables, opcode, Rd, Rs, and immed7
 				// extract the bit fields from the IR into these variables
                 state = EVAL_ADDR;
@@ -82,15 +92,20 @@ int controller (CPU_p cpu)
 			break;
 			case NOT:
 			break;
-			case TRAP:
+			case TRAP://15
+			cpu->MAR = immed;
 			break;
 			case LD:
+			cpu->MAR = cpu->pc + PCoff9;
 			break;
 			case ST:
+			cpu->MAR = cpu->pc + PCoff9;
 			break;
 			case JMP:
+			cpu->pc = reg[Rs1];
 			break;
 			case BR:
+			cpu->pc += PCoff9;
 			break;
 			default:
 			break;

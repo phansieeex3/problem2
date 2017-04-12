@@ -1,0 +1,8 @@
+Here in FETCH
+Contents of IR = 1642
+Im in decode 
+oppcode = 1
+Destination register is: 3
+Source register 1 is : 1
+Source register 2 is : 2
+immed is : 2

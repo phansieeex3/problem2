@@ -30,7 +30,11 @@
 
 
 typedef unsigned short Register;
-
+typedef unsigned char Bit;
+Bit BEN=0;
+Bit N =0;
+Bit Z = 0;
+Bit P = 0;
 
 typedef struct cpu_s {
     Register reg[8];
