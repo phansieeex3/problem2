@@ -44,6 +44,11 @@ typedef struct cpu_s {
     Register MDR;
      
 } CPU_S; 
-
+typedef struct alu_s {
+   Register a;
+   Register b;
+   Register r;
+}ALU_S
+typedef struct alu_s* ALU_p;
 typedef struct cpu_s* CPU_p; 
 int controller (CPU_p cpu);

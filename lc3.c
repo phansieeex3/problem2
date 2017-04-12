@@ -28,6 +28,9 @@ if (argc > 1){
 }
 int controller (CPU_p cpu) 
 {
+    struct alu_s alu;
+    ALU_p aluptr = &alu;
+
     // check to make sure both pointers are not NULL
 	if (cpu == NULL || memory == NULL){
 		return 1;
@@ -76,6 +79,7 @@ int controller (CPU_p cpu)
 		printf("\n PCoff9 is : %d", PCoff9);
                 immed =  (cpu->ir >> IMMED_LSB) & ~(~0 << (IMMED_MSB-IMMED_LSB+1));
 		printf("\nimmed is : %d", immed);
+		CC = (cpu->ir >> 5) & ~(~0 << (5-5 +1));
                 // make sure opcode is in integer form
 		BEN = ((cpu->ir >> 11) & ~(~0 << (11-11+1)) && N) + ((cpu->ir >> 10) & ~(~0 << (10-10+1)) && Z) +((cpu->ir >> 9) & ~(~0 << (9-9+1)) && P);
 				// hint: use four unsigned int variables, opcode, Rd, Rs, and immed7
@@ -83,10 +87,12 @@ int controller (CPU_p cpu)
                 state = EVAL_ADDR;
                 break;
             case EVAL_ADDR: // Look at the LD instruction to see microstate 2 example
+		printf("I'm evaluating the address");
                 switch (opcode) {
                 // different opcodes require different handling
                 // compute effective address, e.g. add sext(immed7) to register
 			case ADD:
+
 			break;
 			case AND:
 			break;
@@ -117,10 +123,26 @@ int controller (CPU_p cpu)
                     // get operands out of registers into A, B of ALU
                     // or get memory for load instr.
 			case ADD:
+			alu->a = reg[Rs1];
+			if(cc){
+			alu->b = immed;
+			}
+			else{
+			alu->b = reg[Rs2];
+			}
 			break;
 			case AND:
+			alu->a = reg[Rs1];
+			if(cc){
+			alu->b = immed;
+			}
+			else{
+			alu->b = reg[Rs2];
+			}
 			break;
 			case NOT:
+			alu->a = reg[Rs1];
+			alu->b = 0;
 			break;
 			case TRAP:
 			break;
