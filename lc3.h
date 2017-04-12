@@ -42,3 +42,4 @@ typedef struct cpu_s {
 } CPU_S; 
 
 typedef struct cpu_s* CPU_p; 
+int controller (CPU_p cpu);

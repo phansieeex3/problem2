@@ -16,13 +16,22 @@ unsigned short memory[32];   // 32 words of memory enough to store simple progra
 
 int main(int argc, char* argv[]) {
 //making change to code test
-printf("%d", argc);
-
-    
+short int com_in;
+if (argc > 1){
+	sscanf(argv[1],"%hX", &com_in);//takes command from command line
+ 	struct cpu_s cpu1;//creating cpu
+ 	CPU_p cpu = &cpu1;//creating pointer to cpu
+ 	cpu->pc =0;
+ 	memory[0] = com_in;
+ 	controller(cpu);
+}
 }
 int controller (CPU_p cpu) 
 {
     // check to make sure both pointers are not NULL
+	if (cpu == NULL){
+		return 1;
+	}
     // do any initializations here
 	unsigned int opcode, state, Rd, Rs1, Rs2, immed;	// fields for the IR
     state = FETCH;
@@ -160,8 +169,9 @@ int controller (CPU_p cpu)
 
                 // do any clean up here in prep for the next complete cycle
                 state = FETCH;
+		return 0;
                 break;
-	return 0;
+	
         }
     }
 }
