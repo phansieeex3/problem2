@@ -29,11 +29,11 @@ if (argc > 1){
 int controller (CPU_p cpu) 
 {
     // check to make sure both pointers are not NULL
-	if (cpu == NULL){
+	if (cpu == NULL || memory == NULL){
 		return 1;
 	}
     // do any initializations here
-	unsigned int opcode, state, Rd, Rs1, Rs2, immed;	// fields for the IR
+	unsigned int opcode, state, Rd, Rs1, Rs2, immed, effective_addr;	// fields for the IR
     state = FETCH;
     for (;;) {   // efficient endless loop
         switch (state) {
@@ -55,15 +55,18 @@ int controller (CPU_p cpu)
                 // get the fields out of the IR
                 printf("Im in decode ");
                 opcode = (cpu->ir >> OPP_LSB) & ~(~0 << (OPP_MSB-OPP_LSB+1));//for instruction 
-                
+                printf("\noppcode = %d", opcode);
                 //destination register
                 Rd= (cpu->ir >> DR_LSB) & ~(~0 << (DR_MSB-DR_LSB+1));
-
+		printf("\nDestination register is: %d", Rd);
                 //first source register
                 Rs1= (cpu->ir >> SR_LSB) & ~(~0 << (SR_MSB-SR_LSB+1));
+		printf("\nSource register 1 is : %d", Rs1);
                 //second source register
                 Rs2= (cpu->ir >> SR2_LSB) & ~(~0 << (SR2_MSB-SR2_LSB+1));
+		printf("\nSource register 2 is : %d", Rs2);
                 immed =  (cpu->ir >> IMMED_LSB) & ~(~0 << (IMMED_MSB-IMMED_LSB+1));
+		printf("\nimmed is : %d", immed);
                 // make sure opcode is in integer form
 				// hint: use four unsigned int variables, opcode, Rd, Rs, and immed7
 				// extract the bit fields from the IR into these variables
