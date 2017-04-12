@@ -8,8 +8,8 @@
 
 #define OPP_LSB 12
 #define OPP_MSB 15
-#define DR_LSB 11
-#define DR_MSB 9
+#define DR_LSB 9
+#define DR_MSB 11
 #define SR_LSB 6
 #define SR_MSB 8
 #define SR2_LSB 0

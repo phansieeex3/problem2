@@ -14,9 +14,9 @@ unsigned short memory[32];   // 32 words of memory enough to store simple progra
 
 
 
-main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
 //making change to code test
-
+printf("%d", argc);
 
     
 }
@@ -24,12 +24,12 @@ int controller (CPU_p cpu)
 {
     // check to make sure both pointers are not NULL
     // do any initializations here
-	unsigned int opcode, Rd, Rs1, Rs2, immed-offset;	// fields for the IR
+	unsigned int opcode, state, Rd, Rs1, Rs2, immed;	// fields for the IR
     state = FETCH;
     for (;;) {   // efficient endless loop
         switch (state) {
             case FETCH: // microstates 18, 33, 35 in the book
-                printf("Here in FETCH\n")
+                printf("Here in FETCH\n");
 
                 //moving memory at pc into instruction register
                 cpu->ir = memory[cpu->pc];
@@ -45,7 +45,7 @@ int controller (CPU_p cpu)
             case DECODE: // microstate 32
                 // get the fields out of the IR
                 printf("Im in decode ");
-                opcode = (cpu->ir >> OPP_LSB) & ~(~0 << (OPP_MSB-OPP_LSB+1))//for instruction 
+                opcode = (cpu->ir >> OPP_LSB) & ~(~0 << (OPP_MSB-OPP_LSB+1));//for instruction 
                 
                 //destination register
                 Rd= (cpu->ir >> DR_LSB) & ~(~0 << (DR_MSB-DR_LSB+1));
@@ -54,7 +54,7 @@ int controller (CPU_p cpu)
                 Rs1= (cpu->ir >> SR_LSB) & ~(~0 << (SR_MSB-SR_LSB+1));
                 //second source register
                 Rs2= (cpu->ir >> SR2_LSB) & ~(~0 << (SR2_MSB-SR2_LSB+1));
-                immed-offset =  (cpu->ir >> IMMED_LSB) & ~(~0 << (IMMED_MSB-IMMED_LSB+1));
+                immed =  (cpu->ir >> IMMED_LSB) & ~(~0 << (IMMED_MSB-IMMED_LSB+1));
                 // make sure opcode is in integer form
 				// hint: use four unsigned int variables, opcode, Rd, Rs, and immed7
 				// extract the bit fields from the IR into these variables
@@ -138,7 +138,6 @@ int controller (CPU_p cpu)
             case STORE: // Look at ST. Microstate 16 is the store to memory
                 switch (opcode) {
                     // write back to register or store MDR into memory
-                }
 			case ADD:
 			break;
 			case AND:
@@ -157,9 +156,12 @@ int controller (CPU_p cpu)
 			break;
 			default:
 			break;
+                }
+
                 // do any clean up here in prep for the next complete cycle
                 state = FETCH;
                 break;
+	return 0;
         }
     }
 }
