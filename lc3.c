@@ -17,6 +17,7 @@ unsigned short memory[32];   // 32 words of memory enough to store simple progra
 main(int argc, char* argv[]) {
 //making change to code test
 
+
     
 }
 int controller (CPU_p cpu) 
@@ -63,6 +64,24 @@ int controller (CPU_p cpu)
                 switch (opcode) {
                 // different opcodes require different handling
                 // compute effective address, e.g. add sext(immed7) to register
+			case ADD:
+			break;
+			case AND:
+			break;
+			case NOT:
+			break;
+			case TRAP:
+			break;
+			case LD:
+			break;
+			case ST:
+			break;
+			case JMP:
+			break;
+			case BR:
+			break;
+			default:
+			break;
                 }
                 state = FETCH_OP;
                 break;
@@ -70,6 +89,24 @@ int controller (CPU_p cpu)
                 switch (opcode) {
                     // get operands out of registers into A, B of ALU
                     // or get memory for load instr.
+			case ADD:
+			break;
+			case AND:
+			break;
+			case NOT:
+			break;
+			case TRAP:
+			break;
+			case LD:
+			break;
+			case ST:
+			break;
+			case JMP:
+			break;
+			case BR:
+			break;
+			default:
+			break;
                 }
                 state = EXECUTE;
                 break;
@@ -77,6 +114,24 @@ int controller (CPU_p cpu)
                 switch (opcode) {
                     // do what the opcode is for, e.g. ADD
                     // in case of TRAP: call trap(int trap_vector) routine, see below for TRAP x25 (HALT)
+			case ADD:
+			break;
+			case AND:
+			break;
+			case NOT:
+			break;
+			case TRAP:
+			break;
+			case LD:
+			break;
+			case ST:
+			break;
+			case JMP:
+			break;
+			case BR:
+			break;
+			default:
+			break;
                 }
                 state = STORE;
                 break;
@@ -84,6 +139,24 @@ int controller (CPU_p cpu)
                 switch (opcode) {
                     // write back to register or store MDR into memory
                 }
+			case ADD:
+			break;
+			case AND:
+			break;
+			case NOT:
+			break;
+			case TRAP:
+			break;
+			case LD:
+			break;
+			case ST:
+			break;
+			case JMP:
+			break;
+			case BR:
+			break;
+			default:
+			break;
                 // do any clean up here in prep for the next complete cycle
                 state = FETCH;
                 break;
