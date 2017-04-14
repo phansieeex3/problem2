@@ -97,7 +97,7 @@ int controller (CPU_p cpu)
                 state = EVAL_ADDR;
                 break;
             case EVAL_ADDR: // Look at the LD instruction to see microstate 2 example
-		printf("I'm evaluating the address");
+		printf("I'm evaluating the address\n");
                 switch (opcode) {
                 // different opcodes require different handling
                 // compute effective address, e.g. add sext(immed7) to register
@@ -112,19 +112,25 @@ int controller (CPU_p cpu)
 					break;
 			case TRAP://15
 				cpu->MAR = (immed7 & cpu->reg[2]);
-                        	printf("Microstate 15 Trap,MAR : = %hX", cpu->MAR);
+                        	printf("Microstate 15 Trap,MAR : %hX\n", cpu->MAR);
 					break;
 			case LD:
 					cpu->MAR = cpu->pc + PCoff9;
+				printf("Microstate 2 LD, MAR : %hX", cpu->MAR);
 			break;
 			case ST:
 					cpu->MAR = cpu->pc + PCoff9;
+					printf("Microstate 3 ST, MAR : %hX\n", cpu->MAR);
 					break;
 			case JMP:
 					cpu->pc = cpu->reg[Rs1];
+					printf("Microstate 12 JMP, pc : %hX\n", cpu->pc);
 					break;
-			case BR:
+			case BR:	
+					if(BEN){
 					cpu->pc += PCoff9;
+					printf("Microstate 0 BR, pc : %hX\n", cpu->pc);
+					}
 					break;
 			default:
 			break;
@@ -137,6 +143,7 @@ int controller (CPU_p cpu)
                     // or get memory for load instr.
 			case ADD:
 					alu->a = cpu->reg[Rs1];
+
 					if(CC)
 					{
 						alu->b = immed;
