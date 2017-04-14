@@ -12,7 +12,8 @@ jmp, and br as a lc3 simulator.
 // you can define a simple memory module here for this program
 unsigned short memory[32];   // 32 words of memory enough to store simple program
 
-
+//changes data, passed in by reference.
+void aluFunction(int opcode, ALU_p alu);
 
 int main(int argc, char* argv[]) {
 //making change to code test
@@ -39,22 +40,25 @@ int controller (CPU_p cpu)
 	unsigned int opcode, state, Rd, Rs1, Rs2, immed, PCoff9;	// fields for the IR
     state = FETCH;
     for (;;) {   // efficient endless loop
-        switch (state) {
+        switch (state) 
+		{
             case FETCH: // microstates 18, 33, 35 in the book
                 printf("Here in FETCH\n");
-		cpu->MAR = cpu->pc;//ms 18
+				cpu->MAR = cpu->pc;//ms 18
 		
                 //moving memory at pc into instruction register 33
                 cpu->MDR = memory[cpu->pc];
 		
                 // get memory[PC] into IR - memory is a global array
-		cpu->ir = memory[cpu->pc];
+				cpu->ir = memory[cpu->pc];
                 // increment PC- ms 18
-		if (cpu->pc < 31){
-		  cpu->pc ++;
-		} else {
-		 cpu->pc = 0;
-		}
+				if (cpu->pc < 31)
+				{
+					cpu->pc ++;
+				} else 
+				{
+					cpu->pc = 0;
+				}
                 printf("Contents of IR = %04X\n", cpu->ir);
 				//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 // put printf statements in each state and microstate to see that it is working
@@ -123,27 +127,30 @@ int controller (CPU_p cpu)
                     // get operands out of registers into A, B of ALU
                     // or get memory for load instr.
 			case ADD:
-			alu->a = reg[Rs1];
-			if(cc){
-			alu->b = immed;
-			}
-			else{
-			alu->b = reg[Rs2];
-			}
+					alu->a = reg[Rs1];
+					if(cc)
+					{
+						alu->b = immed;
+					}
+					else{
+						alu->b = reg[Rs2];
+					}
 			break;
-			case AND:
-			alu->a = reg[Rs1];
-			if(cc){
-			alu->b = immed;
-			}
-			else{
-			alu->b = reg[Rs2];
-			}
-			break;
+					case AND:
+					alu->a = reg[Rs1];
+					if(cc)
+					{
+						alu->b = immed;
+					}
+					else
+					{
+						alu->b = reg[Rs2];
+					}
+					break;
 			case NOT:
-			alu->a = reg[Rs1];
-			alu->b = 0;
-			break;
+					alu->a = reg[Rs1];
+					alu->b = 0;
+					break;
 			case TRAP:
 			break;
 			case LD:
@@ -214,4 +221,25 @@ int controller (CPU_p cpu)
 	
         }
     }
+}
+
+/* Passed in by reference of alu. */
+void aluFunction(int opcode, ALU_p alu){
+
+	if(opcode == ADD)
+	{
+		alu->r = alu->a + alu->b ;
+	}
+	else if(opcode == AND)
+	{
+		//temp for bit shifting 
+		alu->r = alu->a&alu-b; 
+
+	}
+	else if(opcode == NOT)
+	{
+		alu->r = ~(alu->a);
+	}
+
+
 }

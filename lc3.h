@@ -18,7 +18,6 @@
 #define IMMED_MSB 4
 
 
-
 #define ADD 1
 #define AND 5
 #define NOT 9
