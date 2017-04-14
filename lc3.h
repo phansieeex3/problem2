@@ -17,7 +17,9 @@
 #define IMMED_LSB 0
 #define IMMED_MSB 4
 
-
+#define FIVE 0x0005
+#define FIVETEEN 0x000F
+#define ZERO 0x0000
 #define ADD 1
 #define AND 5
 #define NOT 9
@@ -34,7 +36,8 @@ Bit BEN=0;
 Bit N =0;
 Bit Z = 0;
 Bit P = 0;
-
+Bit R = 0;
+Bit CC =0;
 typedef struct cpu_s {
     Register reg[8];
     int pc; 
@@ -47,7 +50,8 @@ typedef struct alu_s {
    Register a;
    Register b;
    Register r;
-}ALU_S
+}ALU_S;
 typedef struct alu_s* ALU_p;
 typedef struct cpu_s* CPU_p; 
 int controller (CPU_p cpu);
+void aluFunction(int opcode, ALU_p alu);
