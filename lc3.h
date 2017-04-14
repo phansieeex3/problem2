@@ -28,7 +28,9 @@
 #define ST 3
 #define JMP 12
 #define BR 0
-
+#define ALU_ADD 0
+#define ALU_AND 1
+#define ALU_NOT 2
 
 typedef unsigned short Register;
 typedef unsigned char Bit;
@@ -36,7 +38,6 @@ Bit BEN=0;
 Bit N =0;
 Bit Z = 0;
 Bit P = 0;
-Bit R = 0;
 Bit CC =0;
 typedef struct cpu_s {
     Register reg[8];

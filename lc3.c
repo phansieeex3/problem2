@@ -50,7 +50,7 @@ int controller (CPU_p cpu)
 		cpu->MAR = cpu->pc;//ms 18
                 //moving memory at pc into instruction register 33
                 cpu->MDR = memory[cpu->pc];
-		R=1;
+		
                 // get memory[PC] into IR - memory is a global array
 		cpu->ir = memory[cpu->pc];
                 // increment PC- ms 18
@@ -144,17 +144,19 @@ int controller (CPU_p cpu)
 			case ADD:
 					alu->a = cpu->reg[Rs1];
 
-					if(CC)
+					if((cpu->ir >> 5) & ~(~0 << (5-5 +1)))
 					{
 						alu->b = immed;
 					}
 					else{
 						alu->b = cpu->reg[Rs2];
 					}
+
+				
 			break;
 					case AND:
 					alu->a = cpu->reg[Rs1];
-					if(CC)
+					if((cpu->ir >> 5) & ~(~0 << (5-5 +1)))
 					{
 						alu->b = immed;
 					}
@@ -162,6 +164,7 @@ int controller (CPU_p cpu)
 					{
 						alu->b = cpu->reg[Rs2];
 					}
+				
 					break;
 			case NOT:
 					alu->a = cpu->reg[Rs1];
@@ -172,6 +175,8 @@ int controller (CPU_p cpu)
 			case LD:
 			break;
 			case ST:
+				cpu->MDR = reg[Rs1];
+				printf("Microstate 23, MDR: %hX", cpu->MDR);
 			break;
 			case JMP:
 			break;
@@ -199,8 +204,13 @@ int controller (CPU_p cpu)
 
 			break;
 			case TRAP: //the rest of the functions should be empty. 
+				cpu->MDR = memory[cpu->MAR];
+				cpu->reg[7] = cpu->pc;
+				printf("Microstate 28 Trap, MDR : %hX R7: %hX", cpu->MDR, cpu->reg[7]);
 			break;
 			case LD:
+				cpu->MDR= memory[cpu->MAR];
+				printf("Microstate 25 MDR: %hX", cpu->MDR);
 			break;
 			case ST:
 			break;
@@ -217,16 +227,32 @@ int controller (CPU_p cpu)
                 switch (opcode) {
                     // write back to register or store MDR into memory
 			case ADD:
+				cpu->reg[Rd] = alu->r;
+				setCC(cpu->reg[Rd]);
+				printf("Microstate 1, Add, DR: %hX", cpu->reg[Rd]);
 			break;
 			case AND:
+				cpu->reg[Rd] = alu->r;
+				setCC(cpu->reg[Rd]);
+				printf("Microstate 5, And, DR: %hX", cpu->reg[Rd]);
 			break;
 			case NOT:
+				cpu->reg[Rd] = alu->r;
+				setCC(cpu->reg[Rd]);
+				printf("Microstate 9, NOT, DR: %hX", cpu->reg[Rd]);
 			break;
 			case TRAP:
+				cpu->pc = cpu->MDR;
+				printf("Microstate 30 PC: %hX", cpu->pc);
 			break;
 			case LD:
+				cpu->reg[Rd] = cpu->MDR;
+				setCC(cpu->reg[Rd]);
+				printf("Microstate 27 DR: %hx", cpu->reg[Rd]);
 			break;
 			case ST:
+				memory[cpu->MAR] = cpu->MDR;
+				printf("Microstate 16 memory %hx : %hx", cpu->MAR);
 			break;
 			case JMP:
 			break;
@@ -267,4 +293,20 @@ void aluFunction(int opcode, ALU_p alu){
 	}
 
 
+}
+
+void setCC(int result){
+	if (result <0 ){
+		N = 1;
+		Z = 0;
+		P = 0;
+	}else if (result == 0){
+		Z =1;
+		N =0;
+		P = 0;
+	}else {
+		P = 1;
+		N = 0;
+		Z = 0;
+	}
 }
