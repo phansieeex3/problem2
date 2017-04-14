@@ -1,0 +1,8 @@
+Things left to do:
+1. Convert instructions to hex (use lc3)
+2. Finish microstates for jmp and Br
+3. Testing
+4. Run all instructions to print to result file
+5. Debug as neccesery
+6. Make pretty (commenting, spacing)
+7. Submit (I would like to do this part because we want to make sure it will be compatable with windows/cygwin(which is what mobus uses to run))
