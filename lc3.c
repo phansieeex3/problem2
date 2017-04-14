@@ -96,27 +96,29 @@ int controller (CPU_p cpu)
                 // different opcodes require different handling
                 // compute effective address, e.g. add sext(immed7) to register
 			case ADD:
-
-			break;
+					
+					break;  
 			case AND:
-			break;
+			
+					break;
 			case NOT:
-			break;
+			
+					break;
 			case TRAP://15
-			cpu->MAR = immed;
-			break;
+					cpu->MAR = immed;
+					break;
 			case LD:
-			cpu->MAR = cpu->pc + PCoff9;
+					cpu->MAR = cpu->pc + PCoff9;
 			break;
 			case ST:
-			cpu->MAR = cpu->pc + PCoff9;
-			break;
+					cpu->MAR = cpu->pc + PCoff9;
+					break;
 			case JMP:
-			cpu->pc = reg[Rs1];
-			break;
+					cpu->pc = reg[Rs1];
+					break;
 			case BR:
-			cpu->pc += PCoff9;
-			break;
+					cpu->pc += PCoff9;
+					break;
 			default:
 			break;
                 }
@@ -171,12 +173,18 @@ int controller (CPU_p cpu)
                     // do what the opcode is for, e.g. ADD
                     // in case of TRAP: call trap(int trap_vector) routine, see below for TRAP x25 (HALT)
 			case ADD:
+		     	aluFunction(ADD, aluptr); //passing in the pointer of alu to do the add op
 			break;
 			case AND:
+				//passing in the pointer of alu to do the and operation .
+				aluFunction(AND, aluptr); 
 			break;
 			case NOT:
+			//passing in the pointer of alu to do the not operation .
+				aluFunction(NOT, aluptr);
+
 			break;
-			case TRAP:
+			case TRAP: //the rest of the functions should be empty. 
 			break;
 			case LD:
 			break;
@@ -239,6 +247,9 @@ void aluFunction(int opcode, ALU_p alu){
 	else if(opcode == NOT)
 	{
 		alu->r = ~(alu->a);
+
+		//if it's in register b then use this '
+		//alu->r = ~(alu->b);
 	}
 
 
