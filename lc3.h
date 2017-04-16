@@ -1,8 +1,6 @@
 /*Phansa Chaonpoj
 Samantha Shoecraft
 problem 2
-lc3.c - implement the instructions add, and, not, trap, ld, st,
-jmp, and br as a lc3 simulator.
 */
 #define CPU_H
 #define FETCH 0
