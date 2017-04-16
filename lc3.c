@@ -27,7 +27,9 @@ if (argc > 1){
 	cpu->reg[1] = FIVE;
 	cpu->reg[2] = FIVETEEN;
 	cpu->reg[3] = ZERO;
+	memory[5] = 42;
  	controller(cpu);
+	
 }
 }
 int controller (CPU_p cpu) 
@@ -50,7 +52,6 @@ int controller (CPU_p cpu)
 		cpu->MAR = cpu->pc;//ms 18
                 //moving memory at pc into instruction register 33
                 cpu->MDR = memory[cpu->pc];
-		
                 // get memory[PC] into IR - memory is a global array
 		cpu->ir = memory[cpu->pc];
                 // increment PC- ms 18
@@ -116,7 +117,7 @@ int controller (CPU_p cpu)
 					break;
 			case LD:
 					cpu->MAR = cpu->pc + PCoff9;
-				printf("Microstate 2 LD, MAR : %hX", cpu->MAR);
+				printf("Microstate 2 LD, MAR : %hX\n", cpu->MAR);
 			break;
 			case ST:
 					cpu->MAR = cpu->pc + PCoff9;
@@ -127,10 +128,10 @@ int controller (CPU_p cpu)
 					printf("Microstate 12 JMP, pc : %hX\n", cpu->pc);
 					break;
 			case BR:	
-					if(BEN){
+					//if(BEN){
 					cpu->pc += PCoff9;
 					printf("Microstate 0 BR, pc : %hX\n", cpu->pc);
-					}
+					//}
 					break;
 			default:
 			break;
@@ -226,7 +227,7 @@ int controller (CPU_p cpu)
                 state = STORE;
                 break;
             case STORE: // Look at ST. Microstate 16 is the store to memory
-		printf("I'm in store!");
+		printf("I'm in store!\n");
                 switch (opcode) {
                     // write back to register or store MDR into memory
 			case ADD:
