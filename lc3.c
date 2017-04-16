@@ -138,13 +138,14 @@ int controller (CPU_p cpu)
                 state = FETCH_OP;
                 break;
             case FETCH_OP: // Look at ST. Microstate 23 example of getting a value out of a register
+		printf("I'm in fetch_op\n");
                 switch (opcode) {
                     // get operands out of registers into A, B of ALU
                     // or get memory for load instr.
 			case ADD:
 					alu->a = cpu->reg[Rs1];
-
-					if((cpu->ir >> 5) & ~(~0 << (5-5 +1)))
+					int choice = (cpu->ir >> 5) & ~(~0 << (5-5 +1));
+					if(choice)
 					{
 						alu->b = immed;
 					}
@@ -156,7 +157,8 @@ int controller (CPU_p cpu)
 			break;
 					case AND:
 					alu->a = cpu->reg[Rs1];
-					if((cpu->ir >> 5) & ~(~0 << (5-5 +1)))
+					int choice2 = (cpu->ir >> 5) & ~(~0 << (5-5 +1));
+					if(choice2)
 					{
 						alu->b = immed;
 					}
@@ -175,8 +177,8 @@ int controller (CPU_p cpu)
 			case LD:
 			break;
 			case ST:
-				cpu->MDR = reg[Rs1];
-				printf("Microstate 23, MDR: %hX", cpu->MDR);
+				cpu->MDR = cpu->reg[Rs1];
+				printf("Microstate 23, MDR: %hX\n", cpu->MDR);
 			break;
 			case JMP:
 			break;
@@ -206,11 +208,11 @@ int controller (CPU_p cpu)
 			case TRAP: //the rest of the functions should be empty. 
 				cpu->MDR = memory[cpu->MAR];
 				cpu->reg[7] = cpu->pc;
-				printf("Microstate 28 Trap, MDR : %hX R7: %hX", cpu->MDR, cpu->reg[7]);
+				printf("Microstate 28 Trap, MDR : %hX R7: %hX\n", cpu->MDR, cpu->reg[7]);
 			break;
 			case LD:
 				cpu->MDR= memory[cpu->MAR];
-				printf("Microstate 25 MDR: %hX", cpu->MDR);
+				printf("Microstate 25 MDR: %hX\n", cpu->MDR);
 			break;
 			case ST:
 			break;
@@ -224,35 +226,36 @@ int controller (CPU_p cpu)
                 state = STORE;
                 break;
             case STORE: // Look at ST. Microstate 16 is the store to memory
+		printf("I'm in store!");
                 switch (opcode) {
                     // write back to register or store MDR into memory
 			case ADD:
 				cpu->reg[Rd] = alu->r;
 				setCC(cpu->reg[Rd]);
-				printf("Microstate 1, Add, DR: %hX", cpu->reg[Rd]);
+				printf("Microstate 1, Add, DR %hx contains %hd\n", Rd , cpu->reg[Rd]);
 			break;
 			case AND:
 				cpu->reg[Rd] = alu->r;
 				setCC(cpu->reg[Rd]);
-				printf("Microstate 5, And, DR: %hX", cpu->reg[Rd]);
+				printf("Microstate 5, And, DR: %hX\n", cpu->reg[Rd]);
 			break;
 			case NOT:
 				cpu->reg[Rd] = alu->r;
 				setCC(cpu->reg[Rd]);
-				printf("Microstate 9, NOT, DR: %hX", cpu->reg[Rd]);
+				printf("Microstate 9, NOT, DR: %hX\n", cpu->reg[Rd]);
 			break;
 			case TRAP:
 				cpu->pc = cpu->MDR;
-				printf("Microstate 30 PC: %hX", cpu->pc);
+				printf("Microstate 30 PC: %hX\n", cpu->pc);
 			break;
 			case LD:
 				cpu->reg[Rd] = cpu->MDR;
 				setCC(cpu->reg[Rd]);
-				printf("Microstate 27 DR: %hx", cpu->reg[Rd]);
+				printf("Microstate 27 DR: %hX\n", cpu->reg[Rd]);
 			break;
 			case ST:
 				memory[cpu->MAR] = cpu->MDR;
-				printf("Microstate 16 memory %hx : %hx", cpu->MAR);
+				printf("Microstate 16 memory %hx : %hx\n", cpu->MAR, cpu->MDR);
 			break;
 			case JMP:
 			break;
@@ -276,18 +279,20 @@ void aluFunction(int opcode, ALU_p alu){
 
 	if(opcode == ADD)
 	{
+		
 		alu->r = alu->a + alu->b ;
+		printf("a: %d, b: %d, r: %d\n", alu->a, alu->b, alu->r);
 	}
 	else if(opcode == AND)
 	{
 		//temp for bit shifting 
 		alu->r = alu->a&alu->b; 
-
+		printf("a: %hd, b: %hd, r: %hd\n", alu->a, alu->b, alu->r);
 	}
 	else if(opcode == NOT)
 	{
 		alu->r = ~(alu->a);
-
+		printf("a: %hd, b: %hd, r: %hd\n", alu->a, alu->b, alu->r);
 		//if it's in register b then use this '
 		//alu->r = ~(alu->b);
 	}

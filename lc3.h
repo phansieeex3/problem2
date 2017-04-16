@@ -1,3 +1,9 @@
+/*Phansa Chaonpoj
+Samantha Shoecraft
+problem 2
+lc3.c - implement the instructions add, and, not, trap, ld, st,
+jmp, and br as a lc3 simulator.
+*/
 #define CPU_H
 #define FETCH 0
 #define DECODE 1
@@ -56,3 +62,4 @@ typedef struct alu_s* ALU_p;
 typedef struct cpu_s* CPU_p; 
 int controller (CPU_p cpu);
 void aluFunction(int opcode, ALU_p alu);
+void setCC(int result);
