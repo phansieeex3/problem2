@@ -2,3 +2,125 @@
 Samantha Shoecraft
 problem 2
 */
+
+Here in FETCH
+Microstate 18, MAR is 0 pc is now : 1
+Microstate 33, MDR is 0X1642
+MicroState 35, Contents of IR = 1642
+Im in decode 
+Source register 1 is : 1
+Microstate 32, BEN is :0 Opcode is : 1
+I'm evaluating the address
+I'm in fetch_op
+a: 5, b: 15, r: 20
+I'm in store!
+Microstate 1, Add, DR 3 contains 20
+Here in FETCH
+Microstate 18, MAR is 0 pc is now : 1
+Microstate 33, MDR is 0X1662
+MicroState 35, Contents of IR = 1662
+Im in decode 
+Source register 1 is : 1
+Microstate 32, BEN is :0 Opcode is : 1
+I'm evaluating the address
+I'm in fetch_op
+a: 5, b: 2, r: 7
+I'm in store!
+Microstate 1, Add, DR 3 contains 7
+Here in FETCH
+Microstate 18, MAR is 0 pc is now : 1
+Microstate 33, MDR is 0X5642
+MicroState 35, Contents of IR = 5642
+Im in decode 
+Source register 1 is : 1
+Microstate 32, BEN is :0 Opcode is : 5
+I'm evaluating the address
+I'm in fetch_op
+a: 5, b: 15, r: 5
+I'm in store!
+Microstate 5, And, DR: 5
+Here in FETCH
+Microstate 18, MAR is 0 pc is now : 1
+Microstate 33, MDR is 0X566F
+MicroState 35, Contents of IR = 566F
+Im in decode 
+Source register 1 is : 1
+Microstate 32, BEN is :0 Opcode is : 5
+I'm evaluating the address
+I'm in fetch_op
+a: 5, b: 15, r: 5
+I'm in store!
+Microstate 5, And, DR: 5
+Here in FETCH
+Microstate 18, MAR is 0 pc is now : 1
+Microstate 33, MDR is 0X967F
+MicroState 35, Contents of IR = 967F
+Im in decode 
+Source register 1 is : 1
+Microstate 32, BEN is :0 Opcode is : 9
+I'm evaluating the address
+I'm in fetch_op
+a: 5, b: 0, r: -6
+I'm in store!
+Microstate 9, NOT, DR: FFFA
+Here in FETCH
+Microstate 18, MAR is 0 pc is now : 1
+Microstate 33, MDR is 0XF019
+MicroState 35, Contents of IR = F019
+Im in decode 
+Source register 1 is : 0
+Microstate 32, BEN is :0 Opcode is : 15
+I'm evaluating the address
+Microstate 15 Trap,MAR : 9
+I'm in fetch_op
+Microstate 28 Trap, MDR : 0 R7: 1
+I'm in store!
+Microstate 30 PC: 0
+Here in FETCH
+Microstate 18, MAR is 0 pc is now : 1
+Microstate 33, MDR is 0X2004
+MicroState 35, Contents of IR = 2004
+Im in decode 
+Source register 1 is : 0
+Microstate 32, BEN is :0 Opcode is : 2
+I'm evaluating the address
+Microstate 2 LD, MAR : 5
+I'm in fetch_op
+Microstate 25 MDR: 2A
+I'm in store!
+Microstate 27 DR: 2A
+Here in FETCH
+Microstate 18, MAR is 0 pc is now : 1
+Microstate 33, MDR is 0X3605
+MicroState 35, Contents of IR = 3605
+Im in decode 
+Source register 1 is : 0
+Microstate 32, BEN is :0 Opcode is : 3
+I'm evaluating the address
+Microstate 3 ST, MAR : 6
+I'm in fetch_op
+Microstate 23, MDR: 0
+I'm in store!
+Microstate 16 memory 6 : 0
+Here in FETCH
+Microstate 18, MAR is 0 pc is now : 1
+Microstate 33, MDR is 0XC000
+MicroState 35, Contents of IR = C000
+Im in decode 
+Source register 1 is : 0
+Microstate 32, BEN is :0 Opcode is : 12
+I'm evaluating the address
+Microstate 12 JMP, pc : 0
+I'm in fetch_op
+I'm in store!
+Here in FETCH
+Microstate 18, MAR is 0 pc is now : 1
+Microstate 33, MDR is 0XE14
+MicroState 35, Contents of IR = 0E14
+Im in decode 
+Source register 1 is : 0
+Microstate 32, BEN is :0 Opcode is : 0
+I'm evaluating the address
+Microstate 0 BR, pc : 15
+I'm in fetch_op
+I'm in store!
